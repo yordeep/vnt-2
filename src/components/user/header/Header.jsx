@@ -1,4 +1,4 @@
-import { Paper } from "@mui/material"
+import { Paper,Badge } from "@mui/material"
 import { useStyles } from "./HeaderCss"
 import { Link } from "react-router-dom"
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
@@ -19,7 +19,11 @@ export default function Header(){
                  </div>
                  <div className={classes.icons}>
                    <Link to="my-account"><PersonOutlineIcon style={{color:'black'}}/></Link>
-                   <Link to="my-account"><StorefrontIcon style={{color:'black'}}/></Link>
+                   <Link to="my-account">
+                    <Badge badgeContent={4} color="primary">
+                    <StorefrontIcon style={{color:'black'}}/>
+                    </Badge>
+                    </Link>
                     </div>
                 </div>
             </Paper>
