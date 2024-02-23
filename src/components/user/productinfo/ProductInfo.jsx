@@ -4,16 +4,25 @@ import { useStyles } from "./productinfoCss";
 import { useLocation } from "react-router-dom";
 import { Grid } from "@mui/material";
 
-function ProductInfo() {
-  let classes = useStyles();
-  let location = useLocation();
 
-  //Defining sTAtes
-  const [productDetails, setProductDetails] = useState([]);
-  const [productId, setProductId] = useState(location.state.productid || "");
-  const [categoryId, setCategoryId] = useState(location.state.categoryid || "");
-  const [relatedProducts, setRelatedProducts] = useState([]);
-  //Defining states
+// Redux imports 
+import { useDispatch } from 'react-redux';
+import { addItem } from '../../slices/cart/cartSlice';
+
+
+
+function ProductInfo() {
+    let classes = useStyles()
+    let location=useLocation()
+    const dispatch = useDispatch()
+     
+
+    //Defining sTAtes
+    const [productDetails,setProductDetails]=useState([])
+    const [productId, setProductId] = useState(location.state ? location.state.productid || '' : '');
+    const [categoryId, setCategoryId] = useState(location.state ? location.state.categoryid || '' : '');
+    const [relatedProducts,setRelatedProducts]=useState([])
+    //Defining states
 
   //Fetching productDetails
   const fetch_product_details = async () => {
@@ -57,48 +66,54 @@ function ProductInfo() {
   //Side toggle
 
   useEffect(() => {
-    setProductId(location.state.productid || "");
-    setCategoryId(location.state.categoryId);
-    fetch_product_details();
-    fetch_related_products();
-  }, []);
+    console.log("location state",location.state);
+    setProductId(location.state ? location.state.productid || '' : '')
+    setCategoryId(location.state ? location.state.categoryId || '' : '')
+    fetch_product_details(); 
+    fetch_related_products()
+}, []);
 
-  const displayProductInfo = () => {
-    return productDetails.map((item) => {
-      return (
-        <div className={classes.shirtInfo} key={item.productid}>
-          <div className={classes.shirtImg}>
-            <img src={`${ServerUrl}/images/${item.image}`} id="1" />
-            <img src={`${ServerUrl}/images/${item.image}`} id="2"/>
-          </div>
-          <div className={classes.desc}>
-            <h1>{item.product}</h1>
-            <h3>{`₹${item.price}.00`}</h3>
-            <p>{item.description}</p>
-            <button className={classes.addBtn}>Add to Cart</button>
-          </div>
-        </div>
-      );
-    });
-  };
+  
 
-  const displayRelatedProducts = () => {
-    return relatedProducts.map((item) => {
-      if (item.productid === productId) {
-        return <div key={item.productid}></div>; // You can return an empty div or handle this case as needed
-      } else {
-        return (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={item.productid}>
-            <img src={`${ServerUrl}/images/${item.image}`} />
-            <div className={classes.productinfo}>
+const displayProductInfo = () =>{
+    return (
+        productDetails.map((item)=>{
+         
+                return <div className={classes.shirtInfo} key={item.productid}>
+                   <div className={classes.shirtImg}>
+                   <img id='1' src={`${ServerUrl}/images/${item.image}`} />
+                    <img id='2' src={`${ServerUrl}/images/${item.image}`} />
+                   </div>
+                   <div className={classes.desc}>
+                   <h1>{item.product}</h1>
+                   <h3>{`₹${item.price}.00`}</h3>
+                    <p>{item.description}</p>
+                    <button className={classes.addBtn} onClick={() =>{dispatch(addItem(item))}} >Add to Cart</button>
+                   </div>
+                </div>
+           
+        })
+    )
+}
+
+const displayRelatedProducts = () => {
+    return (
+      relatedProducts.map((item) => {
+        if (item.productid === productId) {
+          return <div key={item.productid}></div>; // You can return an empty div or handle this case as needed
+        } else {
+          return (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={item.productid} className={classes.relatedprod}>
+            <img src={`${ServerUrl}/images/${item.image}`}/>
+              <div className={classes.productinfo}>
               <h3>{item.description}</h3>
               <p>&#x20B9;{item.price}</p>
             </div>
           </Grid>
         );
       }
-    });
-  };
+    }))
+  }
 
   return (
     <>

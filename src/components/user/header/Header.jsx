@@ -24,6 +24,7 @@ export default function Header(){
                     <StorefrontIcon style={{color:'black'}}/>
                     </Badge>
                     </Link>
+                   <Link to="my-store"><StorefrontIcon style={{color:'black'}}/></Link>
                     </div>
                 </div>
             </Paper>
