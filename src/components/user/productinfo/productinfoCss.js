@@ -1,4 +1,5 @@
 import { makeStyles } from "@mui/styles"
+import ProductInfo from "./ProductInfo"
 export const useStyles = makeStyles({
     container:{
         // backgroundColor:'crimson',
@@ -95,17 +96,27 @@ export const useStyles = makeStyles({
     relatedProducts:{
         // backgroundColor:'red',
         width:'85%',
+        height:'100%',
         margin:'5vw 0vw',
         display:'flex',
         alignItems:'center',
-        justifyContent:'space-evenly',
-        gap:'1vw',
+        justifyContent:'center',
+        // gap:'1vw',
         fontSize:'1.2rem',
         textWrap:'wrap',
+        position:'relative',
         "& img":{
-            width:'20vw',
+            width:'22vw',
             height:'50vh',
-            marginBottom:'0.8vw'
+            marginBottom:'0.8vw',
+            backgroundColor:'green'
         },
+        "& h3":{
+            width:'22vw',
+            marginBottom:'1vh'
+        }
+    },
+    relatedprod:{
+        paddingRight:'2vw'
     }
 })

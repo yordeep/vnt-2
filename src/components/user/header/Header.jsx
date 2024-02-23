@@ -19,7 +19,7 @@ export default function Header(){
                  </div>
                  <div className={classes.icons}>
                    <Link to="my-account"><PersonOutlineIcon style={{color:'black'}}/></Link>
-                   <Link to="my-account"><StorefrontIcon style={{color:'black'}}/></Link>
+                   <Link to="my-store"><StorefrontIcon style={{color:'black'}}/></Link>
                     </div>
                 </div>
             </Paper>
