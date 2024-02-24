@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ServerUrl } from "../../services/ServerServices";
 import ClearIcon from "@mui/icons-material/Clear";
 import { useTheme } from "@mui/material/styles";
-import { addItem, removeItem } from "../../slices/cart/cartSlice";
+import { addItem, removeItem,addQuantity,removeQuantity } from "../../slices/cart/cartSlice";
 import { Grid, Typography, useMediaQuery,Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -35,7 +35,7 @@ const MyStore = () => {
           Your Cart
         </Typography>
 
-        <Grid container spacing={2} sx={{ width: "100%", margin: "auto" }}>
+        <Grid container spacing={2} sx={{ width: "100%", margin: "auto"}}>
           {lg ? (
             // Mobile layout
             items.map((item) => (
@@ -71,7 +71,7 @@ const MyStore = () => {
                 <Grid item xs={12} sx={{ textAlign: "center" }}>
                   <div  style={{display:'flex',width:'100%',alignItems:'center',justifyContent:'space-between'}}>
                 <Typography variant="h6"  sx={{fontWeight:'600'}}>Quantity:</Typography>
-                <p style={{fontWeight:'400', fontSize:'1.2rem'}}>       <Button
+                <p style={{fontWeight:'400', fontSize:'1.5rem'}}>       <Button
       variant="outlined"
       sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" ,width:'8em',height:'2em',borderColor:'black',color:'black'}}
       onClick={() =>{dispatch(addItem(item))}}
@@ -105,14 +105,12 @@ const MyStore = () => {
 
               {/* Items */}
               {items.map((item) => (
-                <Grid container key={item.productid} alignItems="center" sx={{marginTop:'30px'}}>
+                <Grid container key={item.productid} alignItems="center" sx={{margin:'2vh 0vh'}}>
                   <Grid item xs={12} sm={2}>
                     <div className={classes.imgBox}> 
                       <ClearIcon
                         className={classes.carticon}
-                        onClick={() => {
-                          dispatch(removeItem(item.id));
-                        }}
+                        onClick={() => (dispatch(removeItem(item.id)))}
                       />
                       <img
                         className={classes.cartimg}
@@ -133,9 +131,9 @@ const MyStore = () => {
       sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" ,width:'8em',borderColor:'black',color:'black'}}
       
     >
-      <RemoveIcon  />
+      <RemoveIcon onClick = {() => (dispatch(removeQuantity(item.id)))}/>
       <Typography variant="h6">{item.quantity}</Typography>
-      <AddIcon  />
+      <AddIcon  onClick = {() => (dispatch(addQuantity(item.id)))}/>
     </Button>
                   </Grid>
                   <Grid item xs={12} sm={2}>

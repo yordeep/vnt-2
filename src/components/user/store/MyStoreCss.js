@@ -27,8 +27,6 @@ export const useStyles = makeStyles({
             fontSize:'1.5vw',
             fontWeight:'lighter'
         },
-        
-
     },
     cartimg:{
       width:'90px',
@@ -37,17 +35,17 @@ export const useStyles = makeStyles({
     },
     carticon:{
         cursor:'pointer',
-       
     },
     mainContainer:{
        
-       paddingTop:'100px',
-       margin:'auto'
+       paddingTop:'15vh',
+       margin:'auto',
+    //    backgroundColor:'red',
+       height:'100vh',
     },
     imgBox:{
         display:'flex',
         alignItems:'center'
-
     }
    
 })
