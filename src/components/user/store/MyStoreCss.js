@@ -31,9 +31,23 @@ export const useStyles = makeStyles({
 
     },
     cartimg:{
-      width:'5vw',
+      width:'90px',
+      height:'90px',
+      marginLeft:'1.5vw'
     },
     carticon:{
-        cursor:'pointer'
+        cursor:'pointer',
+       
+    },
+    mainContainer:{
+       
+       paddingTop:'100px',
+       margin:'auto'
+    },
+    imgBox:{
+        display:'flex',
+        alignItems:'center'
+
     }
+   
 })

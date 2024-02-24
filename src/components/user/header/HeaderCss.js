@@ -5,6 +5,8 @@ export const useStyles=makeStyles(
             width:'100%',
             height:'80px',
             position:'fixed',
+            top:0,
+            left:0,
             zIndex:'5',
         },
         box:{
