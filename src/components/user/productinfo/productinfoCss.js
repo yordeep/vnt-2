@@ -67,6 +67,7 @@ export const useStyles = makeStyles({
         color:'#fff',
         fontSize:'1.2vw',
         padding:'2vh',
+        cursor:"pointer",
         "&:hover":{
             backgroundColor:"#1a76cb"
         }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { postData, ServerUrl } from "../../services/ServerServices";
 import { useStyles } from "./productinfoCss";
-import { useLocation } from "react-router-dom";
+import { useLocation,useNavigate } from "react-router-dom";
 import { Grid } from "@mui/material";
 
 
@@ -15,6 +15,7 @@ function ProductInfo() {
     let classes = useStyles()
     let location=useLocation()
     const dispatch = useDispatch()
+    let navigate=useNavigate()
      
 
     //Defining sTAtes
@@ -100,10 +101,10 @@ const displayRelatedProducts = () => {
     return (
       relatedProducts.map((item) => {
         if (item.productid === productId) {
-          return <div key={item.productid}></div>; // You can return an empty div or handle this case as needed
+          return <div key={item.productid}></div>; 
         } else {
           return (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={item.productid} className={classes.relatedprod}>
+            <Grid item xs={12} sm={6} md={4} lg={3} key={item.productid} className={classes.relatedprod} >
             <img src={`${ServerUrl}/images/${item.image}`}/>
               <div className={classes.productinfo}>
               <h3>{item.description}</h3>
