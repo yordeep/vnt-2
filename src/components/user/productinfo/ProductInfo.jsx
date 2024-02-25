@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { postData, ServerUrl } from "../../services/ServerServices";
 import { useStyles } from "./productinfoCss";
-import { useLocation,useNavigate } from "react-router-dom";
+import { useLocation,useNavigate,useParams } from "react-router-dom";
 import { Grid } from "@mui/material";
 
 
@@ -16,19 +16,28 @@ function ProductInfo() {
     let location=useLocation()
     const dispatch = useDispatch()
     let navigate=useNavigate()
+    const { newProductId } = useParams();
      
 
     //Defining sTAtes
     const [productDetails,setProductDetails]=useState([])
-    const [productId, setProductId] = useState(location.state ? location.state.productid || '' : '');
+    const [productId, setProductId] = useState(newProductId ? newProductId : (location.state ? location.state.productid || '' : ''));
+ 
     const [categoryId, setCategoryId] = useState(location.state ? location.state.categoryid || '' : '');
     const [relatedProducts,setRelatedProducts]=useState([])
+   
     //Defining states
 
   //Fetching productDetails
   const fetch_product_details = async () => {
     let result = await postData("product/fetch_productinfo", {
       productid: productId,
+    });
+    setProductDetails(result.data);
+  };
+  const fetch_product_details_again = async (pid) => {
+    let result = await postData("product/fetch_productinfo", {
+      productid: pid,
     });
     setProductDetails(result.data);
   };
@@ -41,6 +50,21 @@ function ProductInfo() {
       categoryid: categoryId,
     });
     setRelatedProducts(result.data);
+  };
+
+  const handleRelatedProductClick = (pId) => {
+    // Navigate to the clicked related product's details page
+    setProductId(pId)
+   
+    navigate(`/home/productinfo/${pId}`);
+    fetch_product_details_again(pId)
+    
+    
+    
+    
+    
+    
+
   };
 
   //Fething related products
@@ -72,7 +96,8 @@ function ProductInfo() {
     setCategoryId(location.state ? location.state.categoryId || '' : '')
     fetch_product_details(); 
     fetch_related_products()
-}, []);
+}, [setProductId]);
+
 
   
 
@@ -104,7 +129,7 @@ const displayRelatedProducts = () => {
           return <div key={item.productid}></div>; 
         } else {
           return (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={item.productid} className={classes.relatedprod} >
+            <Grid item xs={12} sm={6} md={4} lg={3} key={item.productid} className={classes.relatedprod} onClick={() => handleRelatedProductClick(item.productid)}>
             <img src={`${ServerUrl}/images/${item.image}`}/>
               <div className={classes.productinfo}>
               <h3>{item.description}</h3>

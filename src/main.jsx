@@ -28,7 +28,7 @@ const route = createBrowserRouter(
     <Route path="/my-account" element={<MyAccount/>}/>
     <Route path="/my-store" element={<MyStore/>}/>
     <Route path="/signup" element={<Signup/>}/>
-    <Route path="/home/productinfo" element={<ProductInfo/>}/>
+    <Route path="/home/productinfo/:productId" element={<ProductInfo/>}/>
     </Route>
   )
 )

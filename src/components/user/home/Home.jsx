@@ -15,7 +15,7 @@ export default function Home() {
   //navigate to productinfo page
   const handleClick=async(pid,cid)=>{
    
-    navigate(`/home/productinfo`,{state:{productid:pid,categoryid:cid}})   
+    navigate(`/home/productinfo/${pid}`,{state:{productid:pid,categoryid:cid}})   
  
  
   }
