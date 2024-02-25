@@ -7,16 +7,23 @@ import { addItem, removeItem,addQuantity,removeQuantity } from "../../slices/car
 import { Grid, Typography, useMediaQuery,Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import { useState } from "react";
 
 const MyStore = () => {
   const classes = useStyles();
   const items = useSelector((state) => state.items);
   const dispatch = useDispatch();
+  const [total, settotal] = useState(0);
+  let subtotal = []
+
    //Defining functions
    const calculateSubtotal = (item) => {
-    return item.price * item.quantity;
-   
+    return item.price * item.quantity  
   };
+
+  const addTosubtotal = (item) =>{
+    subtotal.push(calculateSubtotal(item))
+  }
 
 
    //Defining functions
@@ -27,7 +34,7 @@ const MyStore = () => {
     const lg=useMediaQuery('(max-width:800px)');
 
 
-    console.log(items);
+    // console.log(items);
 
     return (
       <div className={classes.mainContainer} style={{width: md?'100%':'90%'}}>
@@ -74,11 +81,10 @@ const MyStore = () => {
                 <p style={{fontWeight:'400', fontSize:'1.5rem'}}>       <Button
       variant="outlined"
       sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" ,width:'8em',height:'2em',borderColor:'black',color:'black'}}
-      onClick={() =>{dispatch(addItem(item))}}
     >
-      <RemoveIcon />
-      <Typography variant="h6">1</Typography>
-      <AddIcon />
+      <RemoveIcon onClick = {() => (dispatch(removeQuantity(item.id)))} />
+      <Typography variant="h6">{item.quantity}</Typography>
+      <AddIcon onClick = {() => (dispatch(addQuantity(item.id)))} />
     </Button></p>
                   </div>
                 </Grid>
@@ -138,12 +144,33 @@ const MyStore = () => {
                   </Grid>
                   <Grid item xs={12} sm={2}>
                   {calculateSubtotal(item)}
+                  {addTosubtotal(item)}
                   </Grid>
                 </Grid>
               ))}
             </>
           )}
         </Grid>
+
+        {/* total div*/}
+
+        { subtotal.length > 0
+        ?
+        <div className={classes.total}>
+        <div className={classes.innertotal}>
+         {settotal(subtotal.reduce((acc,currval) => acc + currval ,0))}
+          <h1>{`Total : ${total}`}</h1>
+          <button>Proceed To Checkout</button>
+         </div>
+        </div>
+        : 
+        <div className={classes.emptycart}>
+          your cart is empty please add someting 
+        </div>
+        
+        }
+       
+
       </div>
     );
   };
