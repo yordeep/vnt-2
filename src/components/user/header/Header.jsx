@@ -16,8 +16,8 @@ export default function Header(){
                  <div className={classes.links}>
                     <Link to="">Home</Link>
                     <Link>Shop</Link>
-                    <Link>About</Link>
-                    <Link>Contact</Link>
+                    <Link to="about">About</Link>
+                    <Link to="contact">Contact</Link>
                     
                  </div>
                  <div className={classes.icons}>

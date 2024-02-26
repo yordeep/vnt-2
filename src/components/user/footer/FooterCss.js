@@ -9,21 +9,17 @@ export const useStyles = makeStyles({
         alignItems:'center',
         justifyContent:'center',
         gap:'2vw',
-        backgroundColor:'#d7d9ff;',
+        backgroundColor:'#d7d9ff',
         padding:'10vh 0vh',
-        position:'absolute',
         width:'100%',
-    },
-    p1:{
-        fontSize:'1vw',
+
     },
     links:{
         display:'flex',
+        flexWrap:'wrap',
         alignItems:'center',
         justifyContent:'center',
-        gap:'2vw',
         marginBottom:'5vh',
-        fontSize:'2.5vh'
     },
     link:{
         textDecoration:'none',
@@ -34,7 +30,7 @@ export const useStyles = makeStyles({
         display:'flex',
         alignItems:'center',
         justifyContent:'center',
-        gap:'2vw'
+        gap:'3vh'
     },
     slink:{
         border:'0.1vh solid gray',
@@ -45,7 +41,6 @@ export const useStyles = makeStyles({
         padding:'0.6vw',
         color:'#000'
     },
-    p2:{
-        fontSize:'1vw'
-    } 
 })
+
+
