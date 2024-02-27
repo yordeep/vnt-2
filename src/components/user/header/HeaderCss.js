@@ -8,14 +8,16 @@ export const useStyles=makeStyles(
             top:0,
             left:0,
             zIndex:'5',
+            backgroundColor:'red'
         },
         box:{
-            width:'90%',
+            width:'80%',
             margin:'auto',
             height:'100%',
             display:'flex',
             alignItems:'center',
-            justifyContent:'space-evenly'
+            justifyContent:'space-between',
+            // backgroundColor:'red'
         },
         links:{
             width:'50%',
@@ -30,19 +32,16 @@ export const useStyles=makeStyles(
             
         },
         icons:{
-            width:'15%',
+            // backgroundColor:'red',
+            fontSize:'',
             display:'flex',
-            
-            justifyContent:'space-evenly',
-            '& > *':{
-                fontSize:'18px'
-            }
+            alignItems:'center',
+            justifyContent:'',
+            gap:'2vmax'
+
         },
         logoImg:{
-            width:'200px'
-
-            
-            
+            width:'180px'  
         }
     }
 )
