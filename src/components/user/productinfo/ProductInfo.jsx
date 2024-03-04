@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { postData, ServerUrl } from "../../services/ServerServices";
+import { postData } from "../../services/ServerServices";
 import { useStyles } from "./productinfoCss";
 import { useLocation,useNavigate,useParams } from "react-router-dom";
 import { Grid } from "@mui/material";
@@ -16,39 +16,36 @@ function ProductInfo() {
     let location=useLocation()
     const dispatch = useDispatch()
     let navigate=useNavigate()
-    const { newProductId } = useParams();
+    const { newProductId } = useParams()
      
 
     //Defining sTAtes
-    const [productDetails,setProductDetails]=useState([])
     const [productId, setProductId] = useState(newProductId ? newProductId : (location.state ? location.state.productid || '' : ''));
- 
     const [categoryId, setCategoryId] = useState(location.state ? location.state.categoryid || '' : '');
-    const [relatedProducts,setRelatedProducts]=useState([])
+    const [relatedProducts,setRelatedProducts] = useState([])
+    const [productDetails, setproductDetails] = useState([])
+
    
+
     //Defining states
 
   //Fetching productDetails
   const fetch_product_details = async () => {
-    let result = await postData("product/fetch_productinfo", {
-      productid: productId,
-    });
-    setProductDetails(result.data);
+    let result = await postData('users/getproductinfo',{productid:productId});
+    setproductDetails(Array(result.data));
   };
+
   const fetch_product_details_again = async (pid) => {
-    let result = await postData("product/fetch_productinfo", {
-      productid: pid,
-    });
-    setProductDetails(result.data);
+    let result = await postData("users/getproductinfo", {productid: pid})
+    setproductDetails(Array(result.data))
+
   };
 
   // Fetching Product Details
 
   //Fething Related Products
   const fetch_related_products = async () => {
-    let result = await postData("product/fetch_related_products", {
-      categoryid: categoryId,
-    });
+    let result = await postData("users/getrelatedproducts",{categoryid:categoryId});
     setRelatedProducts(result.data);
   };
 
@@ -56,7 +53,7 @@ function ProductInfo() {
     // Navigate to the clicked related product's details page
     setProductId(pId)
    
-    navigate(`/home/productinfo/${pId}`);
+    navigate(`/${pId}`);
     fetch_product_details_again(pId)
     
     
@@ -74,27 +71,27 @@ function ProductInfo() {
   const sideToggle = () => {
     return productDetails.map((item) => {
       return (
-        <div className={classes.sidebar} key={item.productid}>
+        <div className={classes.sidebar} key={item._id}>
           <div className={classes.sideimgs}>
             <a href="#1">
-              <img src={`${ServerUrl}/images/${item.image}`} />
+              <img src={item.productImage} />
             </a>
 
             <a href="#2">
-              <img src={`${ServerUrl}/images/${item.image}`} />
+              <img src={item.productImage} />
             </a>
           </div>
         </div>
       );
     });
   };
+  
   //Side toggle
 
   useEffect(() => {
-    console.log("location state",location.state);
     setProductId(location.state ? location.state.productid || '' : '')
     setCategoryId(location.state ? location.state.categoryId || '' : '')
-    fetch_product_details(); 
+    fetch_product_details()
     fetch_related_products()
 }, [setProductId]);
 
@@ -105,13 +102,13 @@ const displayProductInfo = () =>{
     return (
         productDetails.map((item)=>{
          
-                return <div className={classes.shirtInfo} key={item.productid}>
+                return <div className={classes.shirtInfo} key={item._id}>
                    <div className={classes.shirtImg}>
-                   <img id='1' src={`${ServerUrl}/images/${item.image}`} />
-                    <img id='2' src={`${ServerUrl}/images/${item.image}`} />
+                   <img id='1' src={item.productImage} />
+                    <img id='2' src={item.productImage} />
                    </div>
                    <div className={classes.desc}>
-                   <h1>{item.product}</h1>
+                   <h1>{item.name}</h1>
                    <h3>{`₹${item.price}.00`}</h3>
                     <p>{item.description}</p>
                     <button className={classes.addBtn} onClick={() =>{dispatch(addItem(item))}} >Add to Cart</button>
@@ -125,12 +122,12 @@ const displayProductInfo = () =>{
 const displayRelatedProducts = () => {
     return (
       relatedProducts.map((item) => {
-        if (item.productid === productId) {
-          return <div key={item.productid}></div>; 
+        if (item._id === productId) {
+          return <div key={item._id}></div>; 
         } else {
           return (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={item.productid} className={classes.relatedprod} onClick={() => handleRelatedProductClick(item.productid)}>
-            <img src={`${ServerUrl}/images/${item.image}`}/>
+            <Grid item xs={12} sm={6} md={4} lg={3} key={item._id} className={classes.relatedprod} onClick={() => handleRelatedProductClick(item._id)}>
+            <img src={item.productImage}/>
               <div className={classes.productinfo}>
               <h3>{item.description}</h3>
               <p>&#x20B9;{item.price}</p>

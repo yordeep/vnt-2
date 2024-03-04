@@ -1,6 +1,5 @@
 import { useStyles } from "./MyStoreCss"; // Make sure this import is correct
 import { useDispatch, useSelector } from "react-redux";
-import { ServerUrl } from "../../services/ServerServices";
 import ClearIcon from "@mui/icons-material/Clear";
 import { useTheme } from "@mui/material/styles";
 import { addItem, removeItem,addQuantity,removeQuantity } from "../../slices/cart/cartSlice";
@@ -13,7 +12,6 @@ const MyStore = () => {
   const classes = useStyles();
   const items = useSelector((state) => state.items);
   const dispatch = useDispatch();
-  const [total, settotal] = useState(0);
   let subtotal = []
 
    //Defining functions
@@ -24,7 +22,10 @@ const MyStore = () => {
   const addTosubtotal = (item) =>{
     subtotal.push(calculateSubtotal(item))
   }
-
+ 
+  const calculateTotal = () =>{
+    return items.reduce((acc,item) => acc + calculateSubtotal(item),0)
+  }
 
    //Defining functions
   const CartPage = ({ items }) => {
@@ -46,7 +47,7 @@ const MyStore = () => {
           {lg ? (
             // Mobile layout
             items.map((item) => (
-              <Grid container key={item.productid} alignItems="center" px="2em">
+              <Grid container key={item.id} alignItems="center" px="2em">
                 <Grid item xs={12} sx={{ textAlign: "center",marginTop:'20px' }}>
                   {/* Image and Close Icon */}
                   <div className={classes.imgBox}>
@@ -58,7 +59,7 @@ const MyStore = () => {
                     />
                     <img
                       className={classes.cartimg}
-                      src={`${ServerUrl}/images/${item.image}`}
+                      src={item.image}
                       alt=""
                     />
                   </div>
@@ -66,7 +67,7 @@ const MyStore = () => {
                 <Grid item xs={12} sx={{ textAlign: "center",marginTop:'20px' }} >
                   <div style={{display:'flex',width:'100%',alignItems:'center',justifyContent:'space-between'}}>
                 <Typography variant="h6" sx={{fontWeight:'600'}}>Product:</Typography>
-                  <p style={{fontWeight:'400', fontSize:'1.2rem'}}>{item.product}</p>
+                  <p style={{fontWeight:'400', fontSize:'1.2rem'}}>{item.name}</p>
                   </div>
                 </Grid>
                 <Grid item xs={12} sx={{ textAlign: "center" }}>
@@ -111,7 +112,7 @@ const MyStore = () => {
 
               {/* Items */}
               {items.map((item) => (
-                <Grid container key={item.productid} alignItems="center" sx={{margin:'2vh 0vh'}}>
+                <Grid container key={item.id} alignItems="center" sx={{margin:'2vh 0vh'}}>
                   <Grid item xs={12} sm={2}>
                     <div className={classes.imgBox}> 
                       <ClearIcon
@@ -120,13 +121,13 @@ const MyStore = () => {
                       />
                       <img
                         className={classes.cartimg}
-                        src={`${ServerUrl}/images/${item.image}`}
+                        src={item.image}
                         alt=""
                       />
                     </div>
                   </Grid>
                   <Grid item xs={12} sm={3}>
-                    {item.product}
+                    {item.name}
                   </Grid>
                   <Grid item xs={12} sm={2}>
                     {item.price}
@@ -154,12 +155,11 @@ const MyStore = () => {
 
         {/* total div*/}
 
-        { subtotal.length > 0
+        { items.length > 0
         ?
         <div className={classes.total}>
         <div className={classes.innertotal}>
-         {settotal(subtotal.reduce((acc,currval) => acc + currval ,0))}
-          <h1>{`Total : ${total}`}</h1>
+          <h1>{`Total : ${calculateTotal()}`}</h1>
           <button>Proceed To Checkout</button>
          </div>
         </div>

@@ -1,9 +1,11 @@
 import { useStyles } from "./HomeCss";
 import { Grid } from "@mui/material";
 import { useState,useEffect } from "react";
-import { getData,ServerUrl } from "../../services/ServerServices";
+import { getData } from "../../services/ServerServices";
 import { useNavigate } from "react-router-dom";
+
 export default function Home() {
+
   let classes = useStyles();
   let navigate=useNavigate()
   const [shirts,setShirts]=useState([])
@@ -15,7 +17,7 @@ export default function Home() {
   //navigate to productinfo page
   const handleClick=async(pid,cid)=>{
    
-    navigate(`/home/productinfo/${pid}`,{state:{productid:pid,categoryid:cid}})   
+    navigate(`/${pid}`,{state:{productid:pid,categoryid:cid}})  
  
  
   }
@@ -24,7 +26,7 @@ export default function Home() {
 
   //Fetching all shirts
   const fetch_all_shirts=async()=>{
-    let result= await getData('product/fetch_all_shirts')
+    let result= await getData('users/getallshirts')
     setShirts(result.data)
   }
 
@@ -32,7 +34,7 @@ export default function Home() {
 
   //Fetching all jeans
   const fetch_all_jeans=async()=>{
-    let result= await getData('product/fetch_all_jeans')
+    let result= await getData('users/getalljeans')
     setJeans(result.data)
     
 
@@ -42,7 +44,7 @@ export default function Home() {
 
   //Fetching all tshirts
   const fetch_all_tshirts=async()=>{
-    let result= await getData('product/fetch_all_tshirts')
+    let result= await getData('users/getalltshirts')
     setTshirts(result.data)
   }
    //Fetching all tshirts
@@ -50,13 +52,14 @@ export default function Home() {
    //Fetching all jackets
 
    const fetch_all_jackets=async()=>{
-    let result= await getData('product/fetch_all_jackets')
+    let result= await getData('users/getalljackets')
     setJackets(result.data)
    }
 
    //Fetching all jackets
 
   useEffect(()=>{
+    
       fetch_all_shirts()
       fetch_all_jackets()
       fetch_all_jeans()
@@ -71,8 +74,8 @@ export default function Home() {
 const displayAllShirts=()=>{
   return(
   shirts.map((item)=>(
-    <Grid item xs={12} sm={6} md={4} lg={3} key={item.productid} onClick={()=>handleClick(item.productid,item.categoryid)} >
-    <img src={`${ServerUrl}/images/${item.image}`} style={{width:'100%',height:'65%'}}/>
+    <Grid item xs={12} sm={6} md={4} lg={3} key={item._id} onClick={()=>handleClick(item._id,item.category)} >
+    <img src={item.productImage} style={{width:'100%',height:'65%'}}/>
       <div className={classes.productinfo}>
       <h3>{item.description}</h3>
       <p>&#x20B9;{item.price}</p>
@@ -92,12 +95,13 @@ const displayAllShirts=()=>{
 const displayAllJeans=()=>{
   return(
   jeans.map((item)=>(
-    <Grid item xs={12} sm={6} md={4} lg={3} key={item.productid} onClick={()=>handleClick(item.productid,item.categoryid)}>
-    <img src={`${ServerUrl}/images/${item.image}`} style={{width:'100%',height:'65%'}}/>
+    <Grid item xs={12} sm={6} md={4} lg={3} key={item._id} onClick={()=>handleClick(item._id,item.category)}>
+    <img src={item.productImage} style={{width:'100%',height:'65%'}}/>
       <div className={classes.productinfo}>
       <h3>{item.description}</h3>
       <p>&#x20B9;{item.price}</p>
       </div>
+
 
     </Grid>
   )
@@ -111,8 +115,8 @@ const displayAllJeans=()=>{
 const displayAllTshirts=()=>{
   return(
   tshirts.map((item)=>(
-    <Grid item xs={12} sm={6} md={4} lg={3} key={item.productid} onClick={()=>handleClick(item.productid,item.categoryid)}>
-    <img src={`${ServerUrl}/images/${item.image}`} style={{width:'100%',height:'65%'}}/>
+    <Grid item xs={12} sm={6} md={4} lg={3} key={item._id} onClick={()=>handleClick(item._id,item.category)}>
+    <img src={item.productImage} style={{width:'100%',height:'65%'}}/>
       <div className={classes.productinfo}>
       <h3>{item.description}</h3>
       <p>&#x20B9;{item.price}</p>
@@ -130,8 +134,8 @@ const displayAllTshirts=()=>{
 const displayAllJackets=()=>{
   return(
   jackets.map((item)=>(
-    <Grid item xs={12} sm={6} md={4} lg={3} key={item.productid} onClick={()=>handleClick(item.productid,item.categoryid)}>
-    <img src={`${ServerUrl}/images/${item.image}`} style={{width:'100%',height:'65%'}}/>
+    <Grid item xs={12} sm={6} md={4} lg={3} key={item._id} onClick={()=>handleClick(item._id,item.category)}>
+    <img src={item.productImage} style={{width:'100%',height:'65%'}}/>
       <div className={classes.productinfo}>
       <h3>{item.description}</h3>
       <p>&#x20B9;{item.price}</p>
