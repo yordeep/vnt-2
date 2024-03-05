@@ -11,14 +11,16 @@ export default function MyAccount() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userName, setuserName] = useState("");
+  
   //handling States
   //handling login functionality
   const handleLogin = async () => {
     let body = {
-      email: email,
-      password: password,
+      userName,email,password
     };
-    let result = await postData("user/chk_user_login", body);
+
+    let result = await postData("users/login", body);
 
     if (result.status) {
         Swal.fire({
@@ -51,9 +53,15 @@ export default function MyAccount() {
           Username or email address <span style={{ color: "blue" }}> *</span>
         </h3>
         <TextField
-          label="Username "
+          label="email "
           variant="outlined"
           onChange={(event) => setEmail(event.target.value)}
+        />
+
+<TextField
+          label="Username "
+          variant="outlined"
+          onChange={(event) => setuserName(event.target.value)}
         />
 
         <h3>

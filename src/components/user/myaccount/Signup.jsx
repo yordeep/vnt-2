@@ -17,35 +17,17 @@ export default function Signup() {
   let navigate=useNavigate()
   //States
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [fullName, setfullName] = useState("");
+  const [userName, setuserName] = useState("");
   const [emailAddress, setEmailAddress] = useState("");
-  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [streetAddress, setStreetAddress] = useState("");
-  const [town, setTown] = useState("");
-  const [pinCode, setPinCode] = useState("");
-  const [state, setState] = useState("");
-  //States
-
-  //For handling State change
-  const handleStateChange = (event) => {
-    setState(event.target.value);
-  };
-  //For handling state change
 
    //Clearing values
    const clearValue=()=>{
-    setFirstName('')
-    setLastName('')
+    setfullName('')
+    setuserName('')
     setEmailAddress('')
     setPassword('')
-    setPhone('')
-    setState('')
-    setStreetAddress('')
-    setTown('')
-    setPinCode('')
-
   }
 
   //clearing values
@@ -54,20 +36,14 @@ export default function Signup() {
 
   const handleSubmit = async () => {
     var body = {
-      firstname: firstName,
-      lastname: lastName,
-
+      fullName,
+      userName,
       email: emailAddress,
-      phone: phone,
       password: password,
-      streetaddress: streetAddress,
-      town: town,
-      pincode: pinCode,
-      state: state,
     };
 
     console.log("formData", body);
-    var result = await postData("user/add_new_user", body);
+    var result = await postData("users/register",body);
     if (result.status) {
       Swal.fire({
         icon: "success",
@@ -91,21 +67,21 @@ export default function Signup() {
       <h2 style={{ textAlign: "center", marginBottom: "30px" }}>Sign Up</h2>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <h3 style={{ marginBottom: "10px" }}>First name:</h3>
+          <h3 style={{ marginBottom: "10px" }}>Full Name:</h3>
           <TextField
             fullWidth
             variant="outlined"
-            label="First name"
-            onChange={(event) => setFirstName(event.target.value)}
+            label="Full Name"
+            onChange={(event) => setfullName(event.target.value)}
           />
         </Grid>
         <Grid item xs={12} md={6}>
-          <h3 style={{ marginBottom: "10px" }}>Last name:</h3>
+          <h3 style={{ marginBottom: "10px" }}>User Name:</h3>
           <TextField
             fullWidth
             variant="outlined"
-            label="Last name"
-            onChange={(event) => setLastName(event.target.value)}
+            label="User Name"
+            onChange={(event) => setuserName(event.target.value)}
           />
         </Grid>
 
@@ -121,17 +97,7 @@ export default function Signup() {
         </Grid>
 
         <Grid item xs={12} md={6}>
-          <h3 style={{ marginBottom: "10px" }}>Phone:</h3>
-          <TextField
-            fullWidth
-            variant="outlined"
-            label="Phone"
-            onChange={(event) => setPhone(event.target.value)}
-          />
-        </Grid>
-
-        <Grid item xs={12} md={6}>
-          <h3 style={{ marginBottom: "10px" }}>Set Password:</h3>
+          <h3 style={{ marginBottom: "10px" }}>Password:</h3>
           <TextField
             type="password"
             fullWidth
@@ -139,57 +105,6 @@ export default function Signup() {
             label="Password"
             onChange={(event) => setPassword(event.target.value)}
           />
-        </Grid>
-
-        <Grid item xs={12} md={6}>
-          <h3 style={{ marginBottom: "10px" }}>Street address:</h3>
-          <TextField
-            fullWidth
-            variant="outlined"
-            label="Street address"
-            onChange={(event) => setStreetAddress(event.target.value)}
-          />
-        </Grid>
-
-        <Grid item xs={12} md={6}>
-          <h3 style={{ marginBottom: "10px" }}>Town/City:</h3>
-          <TextField
-            fullWidth
-            variant="outlined"
-            label="Town/City"
-            onChange={(event) => setTown(event.target.value)}
-          />
-        </Grid>
-
-        <Grid item xs={12} md={6}>
-          <h3 style={{ marginBottom: "10px" }}>Pin Code:</h3>
-          <TextField
-            fullWidth
-            variant="outlined"
-            label="Pin code"
-            onChange={(event) => setPinCode(event.target.value)}
-          />
-        </Grid>
-
-        <Grid item xs={6}>
-          <h3 style={{ marginBottom: "10px" }}>State:</h3>
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">State</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={state}
-              label="State"
-              onChange={handleStateChange}
-            >
-              <MenuItem value={"Choose state"}>Choose State----</MenuItem>
-              <MenuItem value={"MP"}>Madhya Pradesh</MenuItem>
-              <MenuItem value={"rajsthan"}>Rajsthan</MenuItem>
-              <MenuItem value={"gujrat"}>Gujrat</MenuItem>
-              <MenuItem value={"hariyana"}>Hariyana</MenuItem>
-              <MenuItem value={"UP"}>Uttar Pradesh</MenuItem>
-            </Select>
-          </FormControl>
         </Grid>
 
         <Grid item xs={12} md={6}>
