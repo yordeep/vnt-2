@@ -2,21 +2,19 @@ import { makeStyles } from "@mui/styles";
 export const useStyles = makeStyles({
   
     mainContainer:{
-        height:'80vh',
+        height:'auto',
         width:'100%',
         position:'relative',
-        paddingTop:'4vh'
+        paddingTop:'4vh',
     },
     box:{
-       height:'100%',
-       width:'35%',
-       gap: '20px',
-       margin:'auto',
-       marginTop:'30px',
-       display:'flex',
-       flexDirection:'column',
-       padding:'50px 100px',
-       
+        height:'100vh',
+        position:'relative',
+        display:'flex',
+        flexDirection:'column',
+        alignItems:'center',
+        justifyContent:'center',
+        gap:'2vmax'
 
     }
 });
